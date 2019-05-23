@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="/"/>
-  <updated>2019-05-23T08:39:18.305Z</updated>
+  <updated>2019-05-23T08:46:08.695Z</updated>
   <id>/</id>
   
   <author>
@@ -21,7 +21,7 @@
     <link href="/2019/05/23/hello-world/"/>
     <id>/2019/05/23/hello-world/</id>
     <published>2019-05-23T02:55:46.969Z</published>
-    <updated>2019-05-23T08:39:18.305Z</updated>
+    <updated>2019-05-23T08:46:08.695Z</updated>
     
     <summary type="html">
     
@@ -34,6 +34,8 @@
       
     
     </summary>
+    
+      <category term="技术" scheme="/categories/%E6%8A%80%E6%9C%AF/"/>
     
     
       <category term="技术" scheme="/tags/%E6%8A%80%E6%9C%AF/"/>
