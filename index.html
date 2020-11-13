@@ -246,6 +246,184 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="/2020/11/13/浅识HLSL中矩阵内存与mul函数/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Sakuralalala">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Sun's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2020/11/13/浅识HLSL中矩阵内存与mul函数/" itemprop="url">浅识HLSL中矩阵内存与mul函数</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-11-13T19:59:19+08:00">
+                2020-11-13
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/技术/" itemprop="url" rel="index">
+                    <span itemprop="name">技术</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+        <div class="post-gallery" itemscope itemtype="http://schema.org/ImageGallery">
+          
+          
+            <div class="post-gallery-row">
+              <a class="post-gallery-img fancybox" href="https://cdn.jsdelivr.net/gh/Sakuralalala/cdn@1.1/img/banner/coding.jpg" rel="gallery_ckhga5t8500061cts8wng6rdy" itemscope itemtype="http://schema.org/ImageObject" itemprop="url">
+                <img src="https://cdn.jsdelivr.net/gh/Sakuralalala/cdn@1.1/img/banner/coding.jpg" itemprop="contentUrl">
+              </a>
+            
+          
+
+          
+          </div>
+        </div>
+      
+
+      
+        
+          
+            <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>  最近在学习DX11的过程中可以发现DirectX是主张行主序矩阵的，这与OpenGL主张列矩阵有所不同（这里插一句，B站上3Blue1Brown中的线代教程，也是使用列主序）,所以可以发现DX中的矩阵乘法基本都是写出行向量左乘行主序矩阵的，即mul(vertor， matrix)，初次看可能觉得有点奇怪，毕竟在unity shdaer中的矩阵乘法大部分都是以mul(matrix, vertor)的形式出现，如果不注意就很容易出现计算错误，这里记录一下HLSL中矩阵内存分布以及mul函数。</p>
+<h2 id="行主序矩阵与列主序矩阵"><a href="#行主序矩阵与列主序矩阵" class="headerlink" title="行主序矩阵与列主序矩阵"></a>行主序矩阵与列主序矩阵</h2><p>  对于一段连续的内存，$m_{11}$$m_{12}$$m_{13}$$m_{14}$$m_{21}$$m_{22}$$m_{23}$$m_{24}$$m_{31}$$m_{32}$$m_{33}$$m_{34}$$m_{41}$$m_{42}$$m_{43}$$m_{44}$</p>
+<ul>
+<li><p>行主序中，内存排布如下:<br>$$M =\left[\begin{matrix}m_{11} &amp; m_{12} &amp; m_{13} &amp; m_{14} \\ m_{21} &amp; m_{22} &amp; m_{23} &amp; m_{24} \\m_{31} &amp; m_{32} &amp; m_{33} &amp; m_{34} \\m_{41} &amp; m_{42} &amp; m_{43} &amp; m_{44}\\\end{matrix}\right] $$</p>
+</li>
+<li><p>列主序中， 内存排布如下:<br>$$M =\left[\begin{matrix}m_{11} &amp; m_{21} &amp; m_{31} &amp; m_{41} \\ m_{12} &amp; m_{22} &amp; m_{32} &amp; m_{42} \\m_{13} &amp; m_{23} &amp; m_{33} &amp; m_{43} \\m_{14} &amp; m_{24} &amp; m_{34} &amp; m_{44}\\\end{matrix}\right] $$</p>
+<p>可以看出行主序与列主序互为转置矩阵，由线代知识可知：$(vM)^T = M^T v^T$</p>
+</li>
+</ul>
+<h2 id="C-与HLSL中的矩阵内存布局"><a href="#C-与HLSL中的矩阵内存布局" class="headerlink" title="C++与HLSL中的矩阵内存布局"></a>C++与HLSL中的矩阵内存布局</h2><p>  在C++中，矩阵都是以行主序矩阵的形式存储的，即对于一串数据$m_{11}$$m_{12}$$m_{13}$$m_{14}$$m_{21}$$m_{22}$$m_{23}$$m_{24}$$m_{31}$$m_{32}$$m_{33}$$m_{34}$$m_{41}$$m_{42}$$m_{43}$$m_{44}$，在C++中是以如下形式解释的:</p>
+<pre><code>   cb0[0].xyzw = {m11, m12, m13, m14};  
+   cb0[1].xyzw = {m21, m22, m23, m24};  
+   cb0[2].xyzw = {m31, m32, m33, m34};  
+   cb0[3].xyzw = {m41, m42, m43, m44}; 
+</code></pre><p>  在HLSL中默认的矩阵无论是matrix还是float4x4都是以列主序的形式解释的，即如果做处理，HLSL从寄存器中读取数据会是如下形式:<br>  $$M =\left[\begin{matrix}m_{11} &amp; m_{21} &amp; m_{31} &amp; m_{41} \\ m_{12} &amp; m_{22} &amp; m_{32} &amp; m_{42} \\m_{13} &amp; m_{23} &amp; m_{33} &amp; m_{43} \\m_{14} &amp; m_{24} &amp; m_{34} &amp; m_{44}\\\end{matrix}\right] $$<br>  可见HLSL读取数据的时候会把矩阵进行转置，其原因就是C++的矩阵数据以行主序存储，而HLSL以列矩阵存储，所以为了保证计算结果的准确性，有一下几种方法:</p>
+<ul>
+<li><p>C++端先进行一次转置<br>C++端转置后，在传入寄存器之中，这样HLSL读取数据之后又会将其变成“行主序矩阵”，并且以行向量左乘矩阵，这时候可以发现，矩阵在乘法过程中取矩阵的列很方便，因为是一段连续的内存。</p>
+</li>
+<li><p>HLSL端进行转置<br>在HLSL中，可以将矩阵从列主序矩阵转置为行主序矩阵，<code>(row_major) matrix g_World;</code>但是这种方法在进行矩阵运算的时候会产生额外的转置操作，性能上有损失。</p>
+</li>
+<li><p>C++端不转置，HLSL默认列矩阵，以mul(matrix, vertor)形式<br>C++端不进行转置操作，HLSL中也默认列主序矩阵，但是在mul函数将向量放到右边。即是列主序矩阵左乘列向量，这也是我们在unity shader中见到的最常见的矩阵乘法的形式，原因就是unity shader中大量默认的矩阵都是以列主序矩阵的形式存在的。</p>
+</li>
+</ul>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="/2020/11/02/近期规划/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -339,7 +517,7 @@
           
           
             <div class="post-gallery-row">
-              <a class="post-gallery-img fancybox" href="https://cdn.jsdelivr.net/gh/Sakuralalala/cdn@1.1/img/banner/writing.jpg" rel="gallery_ckh231fzv00071wtsus1a74m0" itemscope itemtype="http://schema.org/ImageObject" itemprop="url">
+              <a class="post-gallery-img fancybox" href="https://cdn.jsdelivr.net/gh/Sakuralalala/cdn@1.1/img/banner/writing.jpg" rel="gallery_ckhga5t8700081ctskq4sxcjc" itemscope itemtype="http://schema.org/ImageObject" itemprop="url">
                 <img src="https://cdn.jsdelivr.net/gh/Sakuralalala/cdn@1.1/img/banner/writing.jpg" itemprop="contentUrl">
               </a>
             
@@ -535,7 +713,7 @@
           
           
             <div class="post-gallery-row">
-              <a class="post-gallery-img fancybox" href="https://cdn.jsdelivr.net/gh/Sakuralalala/cdn@1.1/img/banner/writing.jpg" rel="gallery_ckh231fzm00011wtsfcxxtf27" itemscope itemtype="http://schema.org/ImageObject" itemprop="url">
+              <a class="post-gallery-img fancybox" href="https://cdn.jsdelivr.net/gh/Sakuralalala/cdn@1.1/img/banner/writing.jpg" rel="gallery_ckhga5t7w00021ctsddyf518s" itemscope itemtype="http://schema.org/ImageObject" itemprop="url">
                 <img src="https://cdn.jsdelivr.net/gh/Sakuralalala/cdn@1.1/img/banner/writing.jpg" itemprop="contentUrl">
               </a>
             
@@ -789,7 +967,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-count">4</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -811,7 +989,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-count">3</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -1027,6 +1205,28 @@
   
 
   
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
 
   
 

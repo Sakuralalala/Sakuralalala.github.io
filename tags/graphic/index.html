@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="关于">
+  <meta name="keywords" content="Hexo, NexT">
 
 
 
@@ -81,20 +81,16 @@
 
 
 
-<meta name="description" content="[さくら荘のhojun]                与&amp;nbsp;   Mashiro&amp;nbsp;   （      真（ま）白（しろ）      ）      对话中...                 function bot_ui_ini() {     var botui = new BotUI(&quot;hello-mashiro&quot;);     botui.message.add({">
-<meta name="keywords" content="关于">
+<meta name="description" content="想法以及笔记">
 <meta property="og:type" content="website">
-<meta property="og:title" content="about">
-<meta property="og:url" content="/about/index.html">
+<meta property="og:title" content="Sun&#39;s blog">
+<meta property="og:url" content="/tags/graphic/index.html">
 <meta property="og:site_name" content="Sun&#39;s blog">
-<meta property="og:description" content="[さくら荘のhojun]                与&amp;nbsp;   Mashiro&amp;nbsp;   （      真（ま）白（しろ）      ）      对话中...                 function bot_ui_ini() {     var botui = new BotUI(&quot;hello-mashiro&quot;);     botui.message.add({">
+<meta property="og:description" content="想法以及笔记">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="https://cdn.jsdelivr.net/gh/honjun/cdn@1.4/img/banner/about.jpg">
-<meta property="og:updated_time" content="2019-05-16T14:39:12.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="about">
-<meta name="twitter:description" content="[さくら荘のhojun]                与&amp;nbsp;   Mashiro&amp;nbsp;   （      真（ま）白（しろ）      ）      对话中...                 function bot_ui_ini() {     var botui = new BotUI(&quot;hello-mashiro&quot;);     botui.message.add({">
-<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/honjun/cdn@1.4/img/banner/about.jpg">
+<meta name="twitter:title" content="Sun&#39;s blog">
+<meta name="twitter:description" content="想法以及笔记">
 
 
 
@@ -124,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="/about/">
+  <link rel="canonical" href="/tags/graphic/">
 
 
 
 
 
-  <title>about | Sun's blog</title>
+  <title>标签: graphic | Sun's blog</title>
   
 
 
@@ -149,7 +145,7 @@
     
   
 
-  <div class="container sidebar-position-left page-post-detail">
+  <div class="container sidebar-position-left ">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -235,196 +231,52 @@
           <div id="content" class="content">
             
 
-  <div id="posts" class="posts-expand">
-    
-    
-    
-    <div class="post-block page">
-      <header class="post-header">
+  
+  
+  
+  <div class="post-block tag">
 
-	<h1 class="post-title" itemprop="name headline">about</h1>
-
-
-
-</header>
-
-      
-      
-      
-      <div class="post-body">
-        
-        
-          
-<div class="moe-mashiro" style="text-align:center; font-size: 50px; margin-bottom: 20px;">[さくら荘のhojun]</div>
-<div id="hello-mashiro" class="popcontainer" style="min-height: 300px; padding: 2px 6px 4px; background-color: rgba(242, 242, 242, 0.5); border-radius: 10px;">
-  <center>
-  <p>
-  </p>
-  <h4>
-  与&nbsp;<ruby>
-  Mashiro&nbsp;<rp>
-  （</rp>
-  <rt>
-  真（ま）白（しろ）</rt>
-  <rp>
-  ）</rp>
-  </ruby>
-  对话中...</h4>
-  <p>
-  </p>
-  </center>
-  <bot-ui>
-</bot-ui></div>
-<script src="https://cdn.jsdelivr.net/vue/latest/vue.min.js"></script>
-<script src="https://unpkg.com/botui/build/botui.min.js"></script>
-<script>
-function bot_ui_ini() {
-    var botui = new BotUI("hello-mashiro");
-    botui.message.add({
-        delay: 800,
-        content: "Hi, there111👋"
-    }).then(function () {
-        botui.message.add({
-            delay: 1100,
-            content: "这里是 Mashiro"
-        }).then(function () {
-            botui.message.add({
-                delay: 1100,
-                content: "一个可爱的蓝孩子~"
-            }).then(function () {
-                botui.action.button({
-                    delay: 1600,
-                    action: [{
-                        text: "然后呢？ 😃",
-                        value: "sure"
-                    }, {
-                        text: "少废话！ 🙄",
-                        value: "skip"
-                    }]
-                }).then(function (a) {
-                    "sure" == a.value && sure();
-                    "skip" == a.value && end()
-                })
-            })
-        })
-    });
-    var sure = function () {
-            botui.message.add({
-                delay: 600,
-                content: "😘"
-            }).then(function () {
-                secondpart()
-            })
-        },
-        end = function () {
-            botui.message.add({
-                delay: 600,
-                content: "![...](https://view.moezx.cc/images/2018/05/06/a1c4cd0452528b572af37952489372b6.md.jpg)"
-            })
-        },
-        secondpart = function () {
-            botui.message.add({
-                delay: 1500,
-                content: "目前就读于上海财经大学"
-            }).then(function () {
-                botui.message.add({
-                    delay: 1500,
-                    content: "向往技术却误入商科，但后来喜欢上了经济学…"
-                }).then(function () {
-                    botui.message.add({
-                        delay: 1200,
-                        content: "因为数据分析也需要Coder嘛"
-                    }).then(function () {
-                        botui.message.add({
-                            delay: 1500,
-                            content: "主攻 R 语言和 Python，略懂 STATA，偶尔也折腾 HTML/CSS/JavaScript/PHP"
-                        }).then(function () {
-                            botui.message.add({
-                                delay: 1500,
-                                content: "研究的方向，是经济/金融方向的数据分析（data science）以及机器学习（machine learning）"
-                            }).then(function () {
-                                botui.message.add({
-                                    delay: 1800,
-                                    content: "喜欢画画，希望有一天能够被称为画师"
-                                }).then(function () {
-                                    botui.action.button({
-                                        delay: 1100,
-                                        action: [{
-                                            text: "为什么叫Mashiro呢？ 🤔",
-                                            value: "why-mashiro"
-                                        }]
-                                    }).then(function (a) {
-                                        thirdpart()
-                                    })
-                                })
-                            })
-                        })
-                    })
-                })
-            })
-        },
-        thirdpart = function () {
-            botui.message.add({
-                delay: 1E3,
-                content: "Mashiro以及站名都来自一部动画，因为和主角有一样的爱好~ 如果有兴趣可以找找首页上的视频~"
-            }).then(function () {
-                botui.action.button({
-                    delay: 1500,
-                    action: [{
-                        text: "为什么是白猫呢？ 🤔",
-                        value: "why-cat"
-                    }]
-                }).then(function (a) {
-                    fourthpart()
-                })
-            })
-        },
-        fourthpart = function () {
-            botui.message.add({
-                delay: 1E3,
-                content: "因为对GitHub有种执念… "
-            }).then(function () {
-                botui.message.add({
-                    delay: 1100,
-                    content: "而且我真的是猫控！"
-                }).then(function () {
-                    botui.action.button({
-                        delay: 1500,
-                        action: [{
-                            text: "域名有什么含意吗？(ง •_•)ง",
-                            value: "why-domain"
-                        }]
-                    }).then(function (a) {
-                        fifthpart()
-                    })
-                })
-            })
-        },
-        fifthpart = function () {
-            botui.message.add({
-                delay: 1E3,
-                content: "emmmm，看备案信息你就知道了=.= 本来想要zheng.xin的，但50万真买不起。。"
-            }).then(function () {
-                botui.message.add({
-                    delay: 1600,
-                    content: "那么，仔细看看我的博客吧？ ^_^"
-                })
-            })
-        } 
-}
-bot_ui_ini()
-</script>
-
-        
+    <div id="posts" class="posts-collapse">
+      <div class="collection-title">
+        <h1>graphic<small>标签</small>
+        </h1>
       </div>
+
       
-      
+        
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      <h2 class="post-title">
+        
+            <a class="post-title-link" href="/2020/11/13/浅识HLSL中矩阵内存与mul函数/" itemprop="url">
+              
+                <span itemprop="name">浅识HLSL中矩阵内存与mul函数</span>
+              
+            </a>
+        
+      </h2>
+
+      <div class="post-meta">
+        <time class="post-time" itemprop="dateCreated" datetime="2020-11-13T19:59:19+08:00" content="2020-11-13">
+          11-13
+        </time>
+      </div>
+
+    </header>
+  </article>
+
+
       
     </div>
-    
-    
-    
+
   </div>
+  
+  
+  
+
+  
 
 
           </div>
@@ -452,17 +304,8 @@ bot_ui_ini()
       
 
       
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            文章目录
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            站点概览
-          </li>
-        </ul>
-      
 
-      <section class="site-overview-wrap sidebar-panel">
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -539,31 +382,6 @@ bot_ui_ini()
         </div>
       </section>
 
-      
-      <!--noindex-->
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-              
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#undefined"><span class="nav-number">1.</span> <span class="nav-text">
-  与 
-  Mashiro 
-  （
-  
-  真（ま）白（しろ）
-  
-  ）
-  
-  对话中...</span></a></li></ol></div>
-            
-
-          </div>
-        </section>
-      <!--/noindex-->
       
 
       
@@ -690,10 +508,6 @@ bot_ui_ini()
 
 
   
-  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
-<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
-
-
 
   
 
