@@ -246,6 +246,201 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="/2020/11/15/浅记图形学中的矩阵变换/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Sakuralalala">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Sun's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2020/11/15/浅记图形学中的矩阵变换/" itemprop="url">浅记图形学中的矩阵变换</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-11-15T19:12:54+08:00">
+                2020-11-15
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/技术/" itemprop="url" rel="index">
+                    <span itemprop="name">技术</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+        <div class="post-gallery" itemscope itemtype="http://schema.org/ImageGallery">
+          
+          
+            <div class="post-gallery-row">
+              <a class="post-gallery-img fancybox" href="https://cdn.jsdelivr.net/gh/Sakuralalala/cdn@1.1/img/banner/writing.jpg" rel="gallery_ckhj45qyy00067otsg022xryu" itemscope itemtype="http://schema.org/ImageObject" itemprop="url">
+                <img src="https://cdn.jsdelivr.net/gh/Sakuralalala/cdn@1.1/img/banner/writing.jpg" itemprop="contentUrl">
+              </a>
+            
+          
+
+          
+          </div>
+        </div>
+      
+
+      
+        
+          
+            <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>  最近在学习DX的过程中，总是看到一堆矩阵乘法，之前学习unity shader的时候对这部分也是浅尝辄止，这次学习DX的过程中，总算是自己照着推算了一波，其实推算完后，对于一些矩阵变换就十分的清楚了然的，这里记录一下矩阵变换的一些小要点。</p>
+<h2 id="世界矩阵与观察矩阵的联系"><a href="#世界矩阵与观察矩阵的联系" class="headerlink" title="世界矩阵与观察矩阵的联系"></a>世界矩阵与观察矩阵的联系</h2><p>  若已知物体所在的位置$Q=(Q_x, Q_y, Q_z)$以及三个互相垂直的坐标轴$u=(u_x, u_y, u_z)$,$v=(v_x, v_y, v_z)$,$w=(w_x, w_y, w_z)$,并且物体的缩放为1，则可以如下表示物体对于的世界矩阵:<br>  $$\left[\begin{matrix}<br>  u_x &amp; u_y &amp; u_z &amp; 0 \\<br>  v_x &amp; v_y &amp; v_z &amp; 0 \\<br>  w_x &amp; w_y &amp; w_z &amp; 0 \\<br>  0 &amp; 0 &amp; 0 &amp; 1 \\<br>  \end{matrix}<br>  \right]<br>  \left[\begin{matrix}<br>  1 &amp; 0 &amp; 0 &amp; 0 \\<br>  0 &amp; 1 &amp; 0 &amp; 0 \\<br>  0 &amp; 0 &amp; 1 &amp; 0 \\<br>  Q_x &amp; Q_y &amp; Q_z &amp; 1 \\<br>  \end{matrix}<br>  \right]<br>  =<br>  \left[\begin{matrix}<br>  u_x &amp; u_y &amp; u_z &amp; 0 \\<br>  v_x &amp; v_y &amp; v_z &amp; 0 \\<br>  w_x &amp; w_y &amp; w_z &amp; 0 \\<br>  Q_x &amp; Q_y &amp; Q_z &amp; 1 \\<br>  \end{matrix}<br>  \right] $$<br>  如果将摄像机作为一个物体看待，那么观察空间坐标其实就是摄像机坐标的局部空间，即以上方向为Y轴，以右方向为X轴，以目视方向为Z轴的一个局部坐标空间。不难发现，要得到这个局部空间其实就是将世界空间矩阵逆变换即可。若以空间坐标原点为世界坐标原点则有一下关系：<br>  $$V = (RT)^{-1} = T^{-1}R^{-1} = T^{-1}R^{T}$$<br>  $$V = \left[\begin{matrix}u_x &amp; v_x &amp; w_x &amp; 0 \\ u_y &amp; v_y &amp; w_y &amp; 0 \\u_z &amp; v_z &amp; w_z &amp; 0 \\-Q \cdot u &amp; -Q \cdot v &amp; -Q \cdot w &amp; 1\\\end{matrix}\right] $$</p>
+<h2 id="矩阵变化复合"><a href="#矩阵变化复合" class="headerlink" title="矩阵变化复合"></a>矩阵变化复合</h2><p>  若一个物体经过缩放，旋转，位移的一系列操作，则他的世界矩阵复合是什么形式的呢。由于矩阵乘法不具有交换律，所以矩阵乘法的顺序会影响到计算的结果，如果缩放操作不先进行的话，那么就会使物体产生畸变，所以得先对缩放操作进行处理，之后如果先平移在旋转，则物体会绕着原点进行旋转，如果先旋转再平移，就是先改变物体的朝向，再位移到指定位置。<br>  通常，对物体修改旋转是基于原点位置上旋转，所以它的世界复合变换为：<br>  $$ W_n = S_0S_1…S_nR_0R_1…R_nT_0T_1…T_n $$<br>  如果涉及到父子关系的物体的世界变换则会有点复杂，如unity中,设父物体的缩放，旋转，位移矩阵为S_0,R_0,T_0,子一级物体的缩放，旋转，位移为S_1,R_1,T_1，则第N层子物体的世界复合矩阵如下：<br>  $$ W_n = S_0S_1…S_nR_nTnR_{n-1}T_{n-1}…R_0T_0 $$</p>
+<h2 id="对于变换的拆分与旋转矩阵的处理"><a href="#对于变换的拆分与旋转矩阵的处理" class="headerlink" title="对于变换的拆分与旋转矩阵的处理"></a>对于变换的拆分与旋转矩阵的处理</h2><p>  对于缩放与平移部分，都可以用一个向量来表示，缩放矩阵的连乘可以看作是向量的分量乘法，平移矩阵的连乘可以看作是向量的加法。对于旋转矩阵来说，可以用四元数，以及基于特定坐标轴旋转的三个欧拉角来表示。四元数先不提，之后搞懂四元数再说-。-，使用三个欧拉角来记录旋转矩阵。对于旋转，采用的是先绕Z轴旋转，再绕X轴旋转，最后再绕Y轴旋转，这是为了最大限度的避免万向节死锁问题，要解决万向节死锁可以使用四元数来表示旋转。由Z-X-Y旋转顺序下由欧拉角产生的旋转矩阵如下：<br>  $$R_z{\Theta}_zR_x{\Theta}_xR_y{\Theta}_y =<br>  \left[\begin{matrix}<br>  \cos{\Theta}_z &amp; \sin{\Theta}_z &amp; 0 &amp; 0 \\<br>  -\sin{\Theta}_z &amp; \cos{\Theta}_z &amp; 0 &amp; 0 \\<br>  0 &amp; 0 &amp; 1 &amp; 0 \\<br>  0 &amp; 0 &amp; 0 &amp; 1 \\<br>  \end{matrix}\right]<br>  \left[<br>  \begin{matrix}<br>  1 &amp; 0 &amp; 0 &amp; 0 \\<br>  0 &amp; \cos{\Theta}_x &amp; \sin{\Theta}_x &amp; 0 \\<br>  0 &amp; -\sin{\Theta}_x &amp; \cos{\Theta}_x &amp; 0 \\<br>  0 &amp; 0 &amp; 0 &amp; 1 \\<br>  \end{matrix}<br>  \right]<br>  \left[<br>  \begin{matrix}<br>  \cos{\Theta}_y &amp; 0 &amp; -\sin{\Theta}_y &amp; 0 \\<br>  0 &amp; 1 &amp; 0 &amp; 0 \\<br>  \sin{\Theta}_y &amp; 0 &amp; \cos{\Theta}_y &amp; 0 \\<br>  0 &amp; 0 &amp; 0 &amp; 1 \\<br>  \end{matrix}<br>  \right] $$<br>  =<br>  $$\left[<br>  \begin{matrix}<br>  \sin{\Theta}_z\sin{\Theta}_x\sin{\Theta}_y + \cos{\Theta}_z\cos{\Theta}_y &amp; \sin{\Theta}_z\cos{\Theta}_x &amp; \sin{\Theta}_z\sin{\Theta}_x\cos{\Theta}_y - \cos{\Theta}_z\sin{\Theta}_y &amp; 0 \\<br>  \cos{\Theta}_z\sin{\Theta}_x\sin{\Theta}_y - \cos{\Theta}_z\cos{\Theta}_y &amp; \cos{\Theta}_z\cos{\Theta}_x &amp; \cos{\Theta}_z\sin{\Theta}_x\cos{\Theta}_y + \sin{\Theta}_z\sin{\Theta}_y &amp; 0 \\<br>  \cos{\Theta}_x\sin{\Theta}_y &amp; -\sin{\Theta}_x &amp; \cos{\Theta}_x\cos{\Theta}_y &amp; 0 \\<br>  0 &amp; 0 &amp; 0 &amp; 1 \\<br>  \end{matrix}<br>  \right] $$</p>
+<ul>
+<li><p>基于欧拉角的旋转<br>基于欧拉角的旋转很简单，只需要更新欧拉角就行:</p>
+<pre><code>void Transform::Rotate(const XMFLOAT3&amp; eulerAnglesInRadian)
+{
+    XMVECTOR newRotationVec = XMVectorAdd(XMLoadFloat3(&amp;m_Rotation), 
+    XMLoadFloat3(&amp;eulerAnglesInRadian));
+    XMStoreFloat3(&amp;m_Rotation, newRotationVec);
+}   
+</code></pre></li>
+<li><p>绕轴旋转<br>先根据欧拉角得到旋转矩阵，然后更新旋转矩阵，最后转回欧拉角:</p>
+<pre><code>void Transform::RotateAxis(const XMFLOAT3&amp; axis, float radian)
+{
+    XMVECTOR rotationVec = XMLoadFloat3(&amp;m_Rotation);
+    XMMATRIX R = XMMatrixRotationRollPitchYawFromVector(rotationVec) * 
+    XMMatrixRotationAxis(XMLoadFloat3(&amp;axis), radian);
+    XMFLOAT4X4 rotMatrix;
+    XMStoreFloat4x4(&amp;rotMatrix, R);
+    m_Rotation = GetEulerAnglesFromRotationMatrix(rotMatrix);
+}   
+</code></pre></li>
+<li><p>基于某一点为旋转中心进行绕轴旋转<br>首先根据已有变换算出旋转矩阵*平移矩阵，然后将旋转中心平移到原点，再进行旋转，再平移回旋转中心:</p>
+<pre><code>void Transform::RotateAround(const XMFLOAT3&amp; point, const XMFLOAT3&amp; axis, float radian)
+{
+    XMVECTOR rotationVec = XMLoadFloat3(&amp;m_Rotation);
+    XMVECTOR positionVec = XMLoadFloat3(&amp;m_Position);
+    XMVECTOR centerVec = XMLoadFloat3(&amp;point);
+
+    // 以point作为原点进行旋转
+    XMMATRIX RT = XMMatrixRotationRollPitchYawFromVector(rotationVec) * XMMatrixTranslationFromVector(positionVec - centerVec);
+    RT *= XMMatrixRotationAxis(XMLoadFloat3(&amp;axis), radian);
+    RT *= XMMatrixTranslationFromVector(centerVec);
+    XMFLOAT4X4 rotMatrix;
+    XMStoreFloat4x4(&amp;rotMatrix, RT);
+}
+</code></pre></li>
+</ul>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="/2020/11/13/浅识HLSL中矩阵内存与mul函数/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -339,7 +534,7 @@
           
           
             <div class="post-gallery-row">
-              <a class="post-gallery-img fancybox" href="https://cdn.jsdelivr.net/gh/Sakuralalala/cdn@1.1/img/banner/coding.jpg" rel="gallery_ckhga5t8500061cts8wng6rdy" itemscope itemtype="http://schema.org/ImageObject" itemprop="url">
+              <a class="post-gallery-img fancybox" href="https://cdn.jsdelivr.net/gh/Sakuralalala/cdn@1.1/img/banner/coding.jpg" rel="gallery_ckhj45qyn00007otshra14urp" itemscope itemtype="http://schema.org/ImageObject" itemprop="url">
                 <img src="https://cdn.jsdelivr.net/gh/Sakuralalala/cdn@1.1/img/banner/coding.jpg" itemprop="contentUrl">
               </a>
             
@@ -517,7 +712,7 @@
           
           
             <div class="post-gallery-row">
-              <a class="post-gallery-img fancybox" href="https://cdn.jsdelivr.net/gh/Sakuralalala/cdn@1.1/img/banner/writing.jpg" rel="gallery_ckhga5t8700081ctskq4sxcjc" itemscope itemtype="http://schema.org/ImageObject" itemprop="url">
+              <a class="post-gallery-img fancybox" href="https://cdn.jsdelivr.net/gh/Sakuralalala/cdn@1.1/img/banner/writing.jpg" rel="gallery_ckhj45qz2000a7otsj4rgsz6w" itemscope itemtype="http://schema.org/ImageObject" itemprop="url">
                 <img src="https://cdn.jsdelivr.net/gh/Sakuralalala/cdn@1.1/img/banner/writing.jpg" itemprop="contentUrl">
               </a>
             
@@ -713,7 +908,7 @@
           
           
             <div class="post-gallery-row">
-              <a class="post-gallery-img fancybox" href="https://cdn.jsdelivr.net/gh/Sakuralalala/cdn@1.1/img/banner/writing.jpg" rel="gallery_ckhga5t7w00021ctsddyf518s" itemscope itemtype="http://schema.org/ImageObject" itemprop="url">
+              <a class="post-gallery-img fancybox" href="https://cdn.jsdelivr.net/gh/Sakuralalala/cdn@1.1/img/banner/writing.jpg" rel="gallery_ckhj45qz000087otsv96tsmg0" itemscope itemtype="http://schema.org/ImageObject" itemprop="url">
                 <img src="https://cdn.jsdelivr.net/gh/Sakuralalala/cdn@1.1/img/banner/writing.jpg" itemprop="contentUrl">
               </a>
             
@@ -967,7 +1162,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-count">5</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>

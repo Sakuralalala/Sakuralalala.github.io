@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="/"/>
-  <updated>2020-11-13T13:37:47.766Z</updated>
+  <updated>2020-11-15T13:17:31.186Z</updated>
   <id>/</id>
   
   <author>
@@ -15,6 +15,32 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>浅记图形学中的矩阵变换</title>
+    <link href="/2020/11/15/%E6%B5%85%E8%AE%B0%E5%9B%BE%E5%BD%A2%E5%AD%A6%E4%B8%AD%E7%9A%84%E7%9F%A9%E9%98%B5%E5%8F%98%E6%8D%A2/"/>
+    <id>/2020/11/15/浅记图形学中的矩阵变换/</id>
+    <published>2020-11-15T11:12:54.000Z</published>
+    <updated>2020-11-15T13:17:31.186Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h2 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h2&gt;&lt;p&gt;  最近在学习DX的过程中，总是看到一堆矩阵乘法，之前学习unity
+        
+      
+    
+    </summary>
+    
+      <category term="技术" scheme="/categories/%E6%8A%80%E6%9C%AF/"/>
+    
+    
+      <category term="graphic" scheme="/tags/graphic/"/>
+    
+  </entry>
   
   <entry>
     <title>浅识HLSL中矩阵内存与mul函数</title>
