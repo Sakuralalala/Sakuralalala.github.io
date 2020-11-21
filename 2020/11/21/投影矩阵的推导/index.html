@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="随想,">
+  <meta name="keywords" content="graphic,">
 
 
 
@@ -81,19 +81,19 @@
 
 
 
-<meta name="description" content="2019.05.24上机教室的我写下这第一篇博客，算是给兵荒马乱的找实习生活画上一个句号。3月1号接到第一通腾讯的面试电话，可以说是人生中的第一次面试，现在看起来其实也没有什么不同，也不过是介绍了自己的项目，以及一些基础知识。第一次面试结果却不如我所想，本以为至少一面能过，却没想到一面直接就被面试官给灰掉了，回想倒也是，基础知识当时全都没复习，红黑树之类的知识当时完全没了解。第二天发现又被捞了">
-<meta name="keywords" content="随想">
+<meta name="description" content="前言  之前接着学习DX的时候，自己手动推导了一遍投影矩阵，发现没有自己之前想到的那么复杂，之前学习的时候就是浅尝辄止，并没有深入去想投影矩阵是怎么构成的，只想着能用内置的api就好，这就导致学的不深，容易忘记，所以，之后遇到一些公式矩阵之类的，不要去死记硬背，试着推导一下，能理解的更深入。这里记录一下推导的思路与过程。 正交投影的推导  正交投影的视锥体是一个$[r,l][t,b][f,n]$的">
+<meta name="keywords" content="graphic">
 <meta property="og:type" content="article">
-<meta property="og:title" content="第一篇博客">
-<meta property="og:url" content="/2019/05/24/第一篇博客/index.html">
+<meta property="og:title" content="投影矩阵的推导">
+<meta property="og:url" content="/2020/11/21/投影矩阵的推导/index.html">
 <meta property="og:site_name" content="Sun&#39;s blog">
-<meta property="og:description" content="2019.05.24上机教室的我写下这第一篇博客，算是给兵荒马乱的找实习生活画上一个句号。3月1号接到第一通腾讯的面试电话，可以说是人生中的第一次面试，现在看起来其实也没有什么不同，也不过是介绍了自己的项目，以及一些基础知识。第一次面试结果却不如我所想，本以为至少一面能过，却没想到一面直接就被面试官给灰掉了，回想倒也是，基础知识当时全都没复习，红黑树之类的知识当时完全没了解。第二天发现又被捞了">
+<meta property="og:description" content="前言  之前接着学习DX的时候，自己手动推导了一遍投影矩阵，发现没有自己之前想到的那么复杂，之前学习的时候就是浅尝辄止，并没有深入去想投影矩阵是怎么构成的，只想着能用内置的api就好，这就导致学的不深，容易忘记，所以，之后遇到一些公式矩阵之类的，不要去死记硬背，试着推导一下，能理解的更深入。这里记录一下推导的思路与过程。 正交投影的推导  正交投影的视锥体是一个$[r,l][t,b][f,n]$的">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/Sakuralalala/cdn@1.1/img/banner/writing.jpg">
-<meta property="og:updated_time" content="2020-11-02T15:03:03.533Z">
+<meta property="og:updated_time" content="2020-11-21T05:33:36.471Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="第一篇博客">
-<meta name="twitter:description" content="2019.05.24上机教室的我写下这第一篇博客，算是给兵荒马乱的找实习生活画上一个句号。3月1号接到第一通腾讯的面试电话，可以说是人生中的第一次面试，现在看起来其实也没有什么不同，也不过是介绍了自己的项目，以及一些基础知识。第一次面试结果却不如我所想，本以为至少一面能过，却没想到一面直接就被面试官给灰掉了，回想倒也是，基础知识当时全都没复习，红黑树之类的知识当时完全没了解。第二天发现又被捞了">
+<meta name="twitter:title" content="投影矩阵的推导">
+<meta name="twitter:description" content="前言  之前接着学习DX的时候，自己手动推导了一遍投影矩阵，发现没有自己之前想到的那么复杂，之前学习的时候就是浅尝辄止，并没有深入去想投影矩阵是怎么构成的，只想着能用内置的api就好，这就导致学的不深，容易忘记，所以，之后遇到一些公式矩阵之类的，不要去死记硬背，试着推导一下，能理解的更深入。这里记录一下推导的思路与过程。 正交投影的推导  正交投影的视锥体是一个$[r,l][t,b][f,n]$的">
 <meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/Sakuralalala/cdn@1.1/img/banner/writing.jpg">
 
 
@@ -124,13 +124,13 @@
 
 
 
-  <link rel="canonical" href="/2019/05/24/第一篇博客/">
+  <link rel="canonical" href="/2020/11/21/投影矩阵的推导/">
 
 
 
 
 
-  <title>第一篇博客 | Sun's blog</title>
+  <title>投影矩阵的推导 | Sun's blog</title>
   
 
 
@@ -249,7 +249,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="/2019/05/24/第一篇博客/">
+    <link itemprop="mainEntityOfPage" href="/2020/11/21/投影矩阵的推导/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Sakuralalala">
@@ -266,7 +266,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">第一篇博客</h1>
+          <h1 class="post-title" itemprop="name headline">投影矩阵的推导</h1>
         
 
         <div class="post-meta">
@@ -278,8 +278,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-05-24T19:24:49+08:00">
-                2019-05-24
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-11-21T11:52:23+08:00">
+                2020-11-21
               </time>
             
 
@@ -301,8 +301,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/随想/" itemprop="url" rel="index">
-                    <span itemprop="name">随想</span>
+                  <a href="/categories/技术/" itemprop="url" rel="index">
+                    <span itemprop="name">技术</span>
                   </a>
                 </span>
 
@@ -340,7 +340,7 @@
           
           
             <div class="post-gallery-row">
-              <a class="post-gallery-img fancybox" href="https://cdn.jsdelivr.net/gh/Sakuralalala/cdn@1.1/img/banner/writing.jpg" rel="gallery_ckhr9i7540006l0tstcihdumb" itemscope itemtype="http://schema.org/ImageObject" itemprop="url">
+              <a class="post-gallery-img fancybox" href="https://cdn.jsdelivr.net/gh/Sakuralalala/cdn@1.1/img/banner/writing.jpg" rel="gallery_ckhr9i758000al0tsvvm5ulfc" itemscope itemtype="http://schema.org/ImageObject" itemprop="url">
                 <img src="https://cdn.jsdelivr.net/gh/Sakuralalala/cdn@1.1/img/banner/writing.jpg" itemprop="contentUrl">
               </a>
             
@@ -352,11 +352,19 @@
       
 
       
-        <p>  2019.05.24上机教室的我写下这第一篇博客，算是给兵荒马乱的找实习生活画上一个句号。3月1号接到第一通腾讯的面试电话，可以说是人生中的第一次面试，现在看起来其实也没有什么不同，也不过是介绍了自己的项目，以及一些基础知识。第一次面试结果却不如我所想，本以为至少一面能过，却没想到一面直接就被面试官给灰掉了，回想倒也是，基础知识当时全都没复习，红黑树之类的知识当时完全没了解。第二天发现又被捞了… </p>
-<p>  第二次面试电话依然是腾讯，3月7号的晚上，当时记得很清楚，吃完饭的时候还在郁闷第一次的面试，结果面试电话就打过来了，这次是感觉最好的一次面试，面试官很和蔼，一直耐心的听我讲项目，所以最后也慢慢的不紧张，完全放下来了，晚上从启明回来查状态进入复试…</p>
-<p>  第三次面试电话还是腾讯，复试电话。只记得前一天晚上紧张的睡不着觉,其实越在意，结果就越可能不如人愿…3月12号下午，第三次电话，腾讯复试。面试的细节倒是记得不多，只记得面了几道开放式的题目，例如三消游戏的思路，弹幕游戏的弹幕管理，当时的情况下，自己完全无法冷静下来去思考，之前的面试全都是讲自己的项目或者一些基础知识，突然问开放式的题，当时直接懵了，其实静下来仔细想一想也能够有些想法…虽然体验不佳但是第三次面试也是跌跌撞撞的过了，然后到了总监面的环节，也是最难受的环节。3月16号，总监面电话，依然是让介绍项目，然后就问自己的优缺点，总共也就20min左右，然后就是漫长的等待环节，一周后，也就是提前批结束前一周，灰了，代表着提前批就这样结束了，学长的直推机会都没用了，以至于到正式批都没有给我发起面试，前几天，学长问我实习情况时，我才知道飞车项目组把我简历迟放了，导致正式批都没有面试机会，可以说找实习真的是运气也有很大的关系…</p>
-<p>  4月是煎熬的，做完腾讯的正式批笔试，却一直没有被发起面试，当时情绪都崩溃了不知道多少次…只记得，一个人坐在启明12楼的角落等待着面试电话，然后又是失望的回宿舍，不过还好，最后还是拿到了巨人的实习offer，待遇也还算可以。当时是7号去现场面试的，只是简单的面试完就让我回去了，当时还以为又没机会了，结果在回去的火车上接到了hr的电话，8号下午算是终于拿到了实习offer，结束了0offer的生活，现在回想起来一路还是坎坷，其实所有的难过都是自己的实力不足所导致的，接下来就是继续充实自己，这也是我决定搭建自己博客的原因，记录下自己的随想以及技术笔记，算是留下一个痕迹吧。</p>
-<p>  最后，感谢找实习时期给自己许多帮助的学长，老师，真的非常感谢他们，不然自己可能挺不过来。总之，前路还在继续，故事还没结束…</p>
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>  之前接着学习DX的时候，自己手动推导了一遍投影矩阵，发现没有自己之前想到的那么复杂，之前学习的时候就是浅尝辄止，并没有深入去想投影矩阵是怎么构成的，只想着能用内置的api就好，这就导致学的不深，容易忘记，所以，之后遇到一些公式矩阵之类的，不要去死记硬背，试着推导一下，能理解的更深入。这里记录一下推导的思路与过程。</p>
+<h2 id="正交投影的推导"><a href="#正交投影的推导" class="headerlink" title="正交投影的推导"></a>正交投影的推导</h2><p>  正交投影的视锥体是一个$[r,l][t,b][f,n]$的一个长方体，对它进行投影变换到$[-1,1][-1,1][-1,1]$的一个正方体中，所以首先求出长方体的中心点$[\frac{r+l}{2},\frac{t+b}{2}, \frac{n+f}{2}]$，所以，我们可以先将视锥体平移到原点位置上，即平移矩阵为:<br>  $$M_{tran} =<br>  \left[\begin{matrix}<br>  1 &amp; 0 &amp; 0 &amp; \frac{-(r+l)}{2} \\<br>  0 &amp; 1 &amp; 0 &amp; \frac{-(t+b)}{2} \\<br>  0 &amp; 0 &amp; 1 &amp; \frac{-(n+f)}{2} \\<br>  0 &amp; 0 &amp; 0 &amp; 1 \\<br>  \end{matrix}<br>  \right]$$<br>  将视锥体平移到原点后，我们需要将其从$[r,l][t,b][f,n]$映射到$[-1,1][-1,1][-1,1]$的范围内，所以对应的缩放矩阵为：<br>  $$M_{scale} =<br>  \left[\begin{matrix}<br>  \frac{2}{r-l} &amp; 0 &amp; 0 &amp; 0 \\<br>  0 &amp; \frac{2}{t-b} &amp; 0 &amp; 0 \\<br>  0 &amp; 0 &amp; \frac{2}{n-f} &amp; 0 \\<br>  0 &amp; 0 &amp; 0 &amp; 1 \\<br>  \end{matrix}<br>  \right]$$<br>  所以转换后的正交投影矩阵可以由上述两个矩阵复合变换得来：<br>  $$M_{ortho} = M_{scale}*M_{tran}<br>  \left[\begin{matrix}<br>  \frac{2}{r-l} &amp; 0 &amp; 0 &amp; 0 \\<br>  0 &amp; \frac{2}{t-b} &amp; 0 &amp; 0 \\<br>  0 &amp; 0 &amp; \frac{2}{n-f} &amp; 0 \\<br>  0 &amp; 0 &amp; 0 &amp; 1 \\<br>  \end{matrix}<br>  \right]<br>  \left[\begin{matrix}<br>  1 &amp; 0 &amp; 0 &amp; \frac{-(r+l)}{2} \\<br>  0 &amp; 1 &amp; 0 &amp; \frac{-(t+b)}{2} \\<br>  0 &amp; 0 &amp; 1 &amp; \frac{-(n+f)}{2} \\<br>  0 &amp; 0 &amp; 0 &amp; 1 \\<br>  \end{matrix}<br>  \right]$$<br>  计算可得正交投影矩阵为:<br>  $$M_{ortho} =<br>  \left[\begin{matrix}<br>  \frac{2}{r-l} &amp; 0 &amp; 0 &amp; -\frac{l+r}{r-l} \\<br>  0 &amp; \frac{2}{t-b} &amp; 0 &amp; -\frac{t+b}{t-b} \\<br>  0 &amp; 0 &amp; \frac{2}{n-f} &amp; -\frac{n+f}{n-f} \\<br>  0 &amp; 0 &amp; 0 &amp; 1 \\<br>  \end{matrix}<br>  \right]$$</p>
+<h2 id="透视投影矩阵的推导"><a href="#透视投影矩阵的推导" class="headerlink" title="透视投影矩阵的推导"></a>透视投影矩阵的推导</h2><p>  正交投影矩阵的视锥体是一个四棱锥的一部分，其中近平面为z=n，远平面为z=f，对它的投影变换稍微复杂一点，我们要把这个视锥体转换到一个正方体[-1,1][-1,1][-1,1]中，可以先把远平面压缩，把视锥体压缩成一个长方体，然后再通过第二步中的正交投影矩阵就可以变换到正方体中</p>
+<ul>
+<li><p>将视锥体的远平面压缩，使之成为一个长方体<br>首先在将视锥体压缩成长方体的过程中，遵守一下三个规则：</p>
+<ul>
+<li>近平面的所有点坐标不变</li>
+<li>远平面的所有点的坐标z值不变，都是f</li>
+<li>远平面的中心点坐标值不变，为$(0,0,f)$</li>
+</ul>
+<p>接下来我们对视锥体的远平面进行压缩，对于视锥体内任意一点$(x,y,z)$，设其在近平面上的投影点坐标为$(x^{’},y^{’},n)$，我们可以由相似三角形求出$x^{’}=\frac{nx}{z}$，$y^{’}=\frac{ny}{z}$，所以问题转换为求一个矩阵如下：<br>$$ \left[\begin{matrix}<br>m_{11} &amp; m_{21} &amp; m_{31} &amp; m_{41} \\<br>m_{12} &amp; m_{22} &amp; m_{32} &amp; m_{42} \\<br>m_{13} &amp; m_{23} &amp; m_{33} &amp; m_{43} \\<br>m_{14} &amp; m_{24} &amp; m_{34} &amp; m_{44} \\<br>\end{matrix}<br>\right]<br>\left[\begin{matrix}<br>x \\<br>y \\<br>z \\<br>1 \\<br>\end{matrix}<br>\right]<br>=<br>\left[\begin{matrix}<br>\frac{nx}{z} \\<br>\frac{ny}{z} \\<br>unknow \\<br>1 \\<br>\end{matrix}<br>\right]$$<br>对于这个矩阵我们会发现很难去求解它，因为$\frac{nx}{z}$，同时有两个未知量，所以是否有办法将其转换为更好求的形式呢，得益于齐次空间中的性质$(x,y,z,1)$与$(kx,ky,kz,k!=0)$是两个等效的点，所以我们取$k=z$带入到矩阵中得：<br>$$ \left[\begin{matrix}<br>m_{11} &amp; m_{21} &amp; m_{31} &amp; m_{41} \\<br>m_{12} &amp; m_{22} &amp; m_{32} &amp; m_{42} \\<br>m_{13} &amp; m_{23} &amp; m_{33} &amp; m_{43} \\<br>m_{14} &amp; m_{24} &amp; m_{34} &amp; m_{44} \\<br>\end{matrix}<br>\right]<br>\left[\begin{matrix}<br>x \\<br>y \\<br>z \\<br>1 \\<br>\end{matrix}<br>\right]<br>=<br>\left[\begin{matrix}<br>nx \\<br>ny \\<br>unknow \\<br>z \\<br>\end{matrix}<br>\right]$$<br>这样我们就能够轻松求出第一第二第四行的值分别为$[n,0,0,0]$,$[0,n,0,0]$,$[0,0,1,0]$，那么如何求解矩阵第三行的值呢？我们由我们之前说到的规律，近平面所以点的坐标不变：<br>$$ \left[\begin{matrix}<br>n &amp; 0 &amp; 0 &amp; 0 \\<br>0 &amp; n &amp; 0 &amp; 0 \\<br>m_{13} &amp; m_{23} &amp; m_{33} &amp; m_{43} \\<br>0 &amp; 0 &amp; 1 &amp; 0 \\<br>\end{matrix}<br>\right]<br>\left[\begin{matrix}<br>x \\<br>y \\<br>n \\<br>1 \\<br>\end{matrix}<br>\right]<br>=<br>\left[\begin{matrix}<br>x \\<br>y \\<br>n \\<br>1 \\<br>\end{matrix}<br>\right]$$<br>我们发现，这只有当n=1的时候才成立，但是我们希望获得的是一个普遍性的规律，所以同样的，我们取$k=n$带入到矩阵中可以得到：<br>$$ \left[\begin{matrix}<br>n &amp; 0 &amp; 0 &amp; 0 \\<br>0 &amp; n &amp; 0 &amp; 0 \\<br>m_{13} &amp; m_{23} &amp; m_{33} &amp; m_{43} \\<br>0 &amp; 0 &amp; 1 &amp; 0 \\<br>\end{matrix}<br>\right]<br>\left[\begin{matrix}<br>x \\<br>y \\<br>n \\<br>1 \\<br>\end{matrix}<br>\right]<br>=<br>\left[\begin{matrix}<br>nx \\<br>ny \\<br>nn \\<br>n  \\<br>\end{matrix}<br>\right]$$<br>可得$m_{33}n+m_{43}= n^2$，同样的远平面的中心点坐标不变为(0,0,f),我们最终联立：<br>$$m_{33}n+m_{43} = n^2$$<br>$$m_{33}f+m_{43} = f^2$$<br>最终求得转换矩阵为:<br>$$ M_{persp-&gt;ortho} =<br>\left[\begin{matrix}<br>n &amp; 0 &amp; 0 &amp; 0 \\<br>0 &amp; n &amp; 0 &amp; 0 \\<br>0 &amp; 0 &amp; n+f &amp; -nf \\<br>0 &amp; 0 &amp; 1 &amp; 0 \\<br>\end{matrix}<br>\right]$$<br>然后我们在乘上正交投影矩阵即$M_{persp}=M_{ortho}M_{persp-&gt;ortho}$，即可得到最终的透视投影矩阵：<br>$$ M_{persp} =<br>\left[\begin{matrix}<br>\frac{2n}{r-l} &amp; 0 &amp; 0 &amp; 0 \\<br>0 &amp; \frac{2n}{t-b} &amp; 0 &amp; 0 \\<br>0 &amp; 0 &amp; \frac{n+f}{n-f} &amp; \frac{-2nf}{n-f} \\<br>0 &amp; 0 &amp; 1 &amp; 0 \\<br>\end{matrix}<br>\right]$$</p>
+</li>
+</ul>
 
       
     </div>
@@ -374,7 +382,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/随想/" rel="tag"># 随想</a>
+            <a href="/tags/graphic/" rel="tag"># graphic</a>
           
         </div>
       
@@ -387,8 +395,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/05/23/hello-world/" rel="next" title="Hello World">
-                <i class="fa fa-chevron-left"></i> Hello World
+              <a href="/2020/11/15/浅记图形学中的矩阵变换/" rel="next" title="浅记图形学中的矩阵变换">
+                <i class="fa fa-chevron-left"></i> 浅记图形学中的矩阵变换
               </a>
             
           </div>
@@ -396,10 +404,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2020/11/02/近期规划/" rel="prev" title="近期规划">
-                近期规划 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -449,8 +453,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -527,6 +540,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#正交投影的推导"><span class="nav-number">2.</span> <span class="nav-text">正交投影的推导</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#透视投影矩阵的推导"><span class="nav-number">3.</span> <span class="nav-text">透视投影矩阵的推导</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       

@@ -246,6 +246,174 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="/2020/11/21/投影矩阵的推导/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Sakuralalala">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Sun's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2020/11/21/投影矩阵的推导/" itemprop="url">投影矩阵的推导</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-11-21T11:52:23+08:00">
+                2020-11-21
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/技术/" itemprop="url" rel="index">
+                    <span itemprop="name">技术</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+        <div class="post-gallery" itemscope itemtype="http://schema.org/ImageGallery">
+          
+          
+            <div class="post-gallery-row">
+              <a class="post-gallery-img fancybox" href="https://cdn.jsdelivr.net/gh/Sakuralalala/cdn@1.1/img/banner/writing.jpg" rel="gallery_ckhr9i758000al0tsvvm5ulfc" itemscope itemtype="http://schema.org/ImageObject" itemprop="url">
+                <img src="https://cdn.jsdelivr.net/gh/Sakuralalala/cdn@1.1/img/banner/writing.jpg" itemprop="contentUrl">
+              </a>
+            
+          
+
+          
+          </div>
+        </div>
+      
+
+      
+        
+          
+            <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>  之前接着学习DX的时候，自己手动推导了一遍投影矩阵，发现没有自己之前想到的那么复杂，之前学习的时候就是浅尝辄止，并没有深入去想投影矩阵是怎么构成的，只想着能用内置的api就好，这就导致学的不深，容易忘记，所以，之后遇到一些公式矩阵之类的，不要去死记硬背，试着推导一下，能理解的更深入。这里记录一下推导的思路与过程。</p>
+<h2 id="正交投影的推导"><a href="#正交投影的推导" class="headerlink" title="正交投影的推导"></a>正交投影的推导</h2><p>  正交投影的视锥体是一个$[r,l][t,b][f,n]$的一个长方体，对它进行投影变换到$[-1,1][-1,1][-1,1]$的一个正方体中，所以首先求出长方体的中心点$[\frac{r+l}{2},\frac{t+b}{2}, \frac{n+f}{2}]$，所以，我们可以先将视锥体平移到原点位置上，即平移矩阵为:<br>  $$M_{tran} =<br>  \left[\begin{matrix}<br>  1 &amp; 0 &amp; 0 &amp; \frac{-(r+l)}{2} \\<br>  0 &amp; 1 &amp; 0 &amp; \frac{-(t+b)}{2} \\<br>  0 &amp; 0 &amp; 1 &amp; \frac{-(n+f)}{2} \\<br>  0 &amp; 0 &amp; 0 &amp; 1 \\<br>  \end{matrix}<br>  \right]$$<br>  将视锥体平移到原点后，我们需要将其从$[r,l][t,b][f,n]$映射到$[-1,1][-1,1][-1,1]$的范围内，所以对应的缩放矩阵为：<br>  $$M_{scale} =<br>  \left[\begin{matrix}<br>  \frac{2}{r-l} &amp; 0 &amp; 0 &amp; 0 \\<br>  0 &amp; \frac{2}{t-b} &amp; 0 &amp; 0 \\<br>  0 &amp; 0 &amp; \frac{2}{n-f} &amp; 0 \\<br>  0 &amp; 0 &amp; 0 &amp; 1 \\<br>  \end{matrix}<br>  \right]$$<br>  所以转换后的正交投影矩阵可以由上述两个矩阵复合变换得来：<br>  $$M_{ortho} = M_{scale}*M_{tran}<br>  \left[\begin{matrix}<br>  \frac{2}{r-l} &amp; 0 &amp; 0 &amp; 0 \\<br>  0 &amp; \frac{2}{t-b} &amp; 0 &amp; 0 \\<br>  0 &amp; 0 &amp; \frac{2}{n-f} &amp; 0 \\<br>  0 &amp; 0 &amp; 0 &amp; 1 \\<br>  \end{matrix}<br>  \right]<br>  \left[\begin{matrix}<br>  1 &amp; 0 &amp; 0 &amp; \frac{-(r+l)}{2} \\<br>  0 &amp; 1 &amp; 0 &amp; \frac{-(t+b)}{2} \\<br>  0 &amp; 0 &amp; 1 &amp; \frac{-(n+f)}{2} \\<br>  0 &amp; 0 &amp; 0 &amp; 1 \\<br>  \end{matrix}<br>  \right]$$<br>  计算可得正交投影矩阵为:<br>  $$M_{ortho} =<br>  \left[\begin{matrix}<br>  \frac{2}{r-l} &amp; 0 &amp; 0 &amp; -\frac{l+r}{r-l} \\<br>  0 &amp; \frac{2}{t-b} &amp; 0 &amp; -\frac{t+b}{t-b} \\<br>  0 &amp; 0 &amp; \frac{2}{n-f} &amp; -\frac{n+f}{n-f} \\<br>  0 &amp; 0 &amp; 0 &amp; 1 \\<br>  \end{matrix}<br>  \right]$$</p>
+<h2 id="透视投影矩阵的推导"><a href="#透视投影矩阵的推导" class="headerlink" title="透视投影矩阵的推导"></a>透视投影矩阵的推导</h2><p>  正交投影矩阵的视锥体是一个四棱锥的一部分，其中近平面为z=n，远平面为z=f，对它的投影变换稍微复杂一点，我们要把这个视锥体转换到一个正方体[-1,1][-1,1][-1,1]中，可以先把远平面压缩，把视锥体压缩成一个长方体，然后再通过第二步中的正交投影矩阵就可以变换到正方体中</p>
+<ul>
+<li><p>将视锥体的远平面压缩，使之成为一个长方体<br>首先在将视锥体压缩成长方体的过程中，遵守一下三个规则：</p>
+<ul>
+<li>近平面的所有点坐标不变</li>
+<li>远平面的所有点的坐标z值不变，都是f</li>
+<li>远平面的中心点坐标值不变，为$(0,0,f)$</li>
+</ul>
+<p>接下来我们对视锥体的远平面进行压缩，对于视锥体内任意一点$(x,y,z)$，设其在近平面上的投影点坐标为$(x^{’},y^{’},n)$，我们可以由相似三角形求出$x^{’}=\frac{nx}{z}$，$y^{’}=\frac{ny}{z}$，所以问题转换为求一个矩阵如下：<br>$$ \left[\begin{matrix}<br>m_{11} &amp; m_{21} &amp; m_{31} &amp; m_{41} \\<br>m_{12} &amp; m_{22} &amp; m_{32} &amp; m_{42} \\<br>m_{13} &amp; m_{23} &amp; m_{33} &amp; m_{43} \\<br>m_{14} &amp; m_{24} &amp; m_{34} &amp; m_{44} \\<br>\end{matrix}<br>\right]<br>\left[\begin{matrix}<br>x \\<br>y \\<br>z \\<br>1 \\<br>\end{matrix}<br>\right]<br>=<br>\left[\begin{matrix}<br>\frac{nx}{z} \\<br>\frac{ny}{z} \\<br>unknow \\<br>1 \\<br>\end{matrix}<br>\right]$$<br>对于这个矩阵我们会发现很难去求解它，因为$\frac{nx}{z}$，同时有两个未知量，所以是否有办法将其转换为更好求的形式呢，得益于齐次空间中的性质$(x,y,z,1)$与$(kx,ky,kz,k!=0)$是两个等效的点，所以我们取$k=z$带入到矩阵中得：<br>$$ \left[\begin{matrix}<br>m_{11} &amp; m_{21} &amp; m_{31} &amp; m_{41} \\<br>m_{12} &amp; m_{22} &amp; m_{32} &amp; m_{42} \\<br>m_{13} &amp; m_{23} &amp; m_{33} &amp; m_{43} \\<br>m_{14} &amp; m_{24} &amp; m_{34} &amp; m_{44} \\<br>\end{matrix}<br>\right]<br>\left[\begin{matrix}<br>x \\<br>y \\<br>z \\<br>1 \\<br>\end{matrix}<br>\right]<br>=<br>\left[\begin{matrix}<br>nx \\<br>ny \\<br>unknow \\<br>z \\<br>\end{matrix}<br>\right]$$<br>这样我们就能够轻松求出第一第二第四行的值分别为$[n,0,0,0]$,$[0,n,0,0]$,$[0,0,1,0]$，那么如何求解矩阵第三行的值呢？我们由我们之前说到的规律，近平面所以点的坐标不变：<br>$$ \left[\begin{matrix}<br>n &amp; 0 &amp; 0 &amp; 0 \\<br>0 &amp; n &amp; 0 &amp; 0 \\<br>m_{13} &amp; m_{23} &amp; m_{33} &amp; m_{43} \\<br>0 &amp; 0 &amp; 1 &amp; 0 \\<br>\end{matrix}<br>\right]<br>\left[\begin{matrix}<br>x \\<br>y \\<br>n \\<br>1 \\<br>\end{matrix}<br>\right]<br>=<br>\left[\begin{matrix}<br>x \\<br>y \\<br>n \\<br>1 \\<br>\end{matrix}<br>\right]$$<br>我们发现，这只有当n=1的时候才成立，但是我们希望获得的是一个普遍性的规律，所以同样的，我们取$k=n$带入到矩阵中可以得到：<br>$$ \left[\begin{matrix}<br>n &amp; 0 &amp; 0 &amp; 0 \\<br>0 &amp; n &amp; 0 &amp; 0 \\<br>m_{13} &amp; m_{23} &amp; m_{33} &amp; m_{43} \\<br>0 &amp; 0 &amp; 1 &amp; 0 \\<br>\end{matrix}<br>\right]<br>\left[\begin{matrix}<br>x \\<br>y \\<br>n \\<br>1 \\<br>\end{matrix}<br>\right]<br>=<br>\left[\begin{matrix}<br>nx \\<br>ny \\<br>nn \\<br>n  \\<br>\end{matrix}<br>\right]$$<br>可得$m_{33}n+m_{43}= n^2$，同样的远平面的中心点坐标不变为(0,0,f),我们最终联立：<br>$$m_{33}n+m_{43} = n^2$$<br>$$m_{33}f+m_{43} = f^2$$<br>最终求得转换矩阵为:<br>$$ M_{persp-&gt;ortho} =<br>\left[\begin{matrix}<br>n &amp; 0 &amp; 0 &amp; 0 \\<br>0 &amp; n &amp; 0 &amp; 0 \\<br>0 &amp; 0 &amp; n+f &amp; -nf \\<br>0 &amp; 0 &amp; 1 &amp; 0 \\<br>\end{matrix}<br>\right]$$<br>然后我们在乘上正交投影矩阵即$M_{persp}=M_{ortho}M_{persp-&gt;ortho}$，即可得到最终的透视投影矩阵：<br>$$ M_{persp} =<br>\left[\begin{matrix}<br>\frac{2n}{r-l} &amp; 0 &amp; 0 &amp; 0 \\<br>0 &amp; \frac{2n}{t-b} &amp; 0 &amp; 0 \\<br>0 &amp; 0 &amp; \frac{n+f}{n-f} &amp; \frac{-2nf}{n-f} \\<br>0 &amp; 0 &amp; 1 &amp; 0 \\<br>\end{matrix}<br>\right]$$</p>
+</li>
+</ul>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="/2020/11/15/浅记图形学中的矩阵变换/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -339,7 +507,7 @@
           
           
             <div class="post-gallery-row">
-              <a class="post-gallery-img fancybox" href="https://cdn.jsdelivr.net/gh/Sakuralalala/cdn@1.1/img/banner/writing.jpg" rel="gallery_ckhj45qyy00067otsg022xryu" itemscope itemtype="http://schema.org/ImageObject" itemprop="url">
+              <a class="post-gallery-img fancybox" href="https://cdn.jsdelivr.net/gh/Sakuralalala/cdn@1.1/img/banner/writing.jpg" rel="gallery_ckhr9i7560008l0tsapxnxn03" itemscope itemtype="http://schema.org/ImageObject" itemprop="url">
                 <img src="https://cdn.jsdelivr.net/gh/Sakuralalala/cdn@1.1/img/banner/writing.jpg" itemprop="contentUrl">
               </a>
             
@@ -534,7 +702,7 @@
           
           
             <div class="post-gallery-row">
-              <a class="post-gallery-img fancybox" href="https://cdn.jsdelivr.net/gh/Sakuralalala/cdn@1.1/img/banner/coding.jpg" rel="gallery_ckhj45qyn00007otshra14urp" itemscope itemtype="http://schema.org/ImageObject" itemprop="url">
+              <a class="post-gallery-img fancybox" href="https://cdn.jsdelivr.net/gh/Sakuralalala/cdn@1.1/img/banner/coding.jpg" rel="gallery_ckhr9i7500002l0tsmww85pj4" itemscope itemtype="http://schema.org/ImageObject" itemprop="url">
                 <img src="https://cdn.jsdelivr.net/gh/Sakuralalala/cdn@1.1/img/banner/coding.jpg" itemprop="contentUrl">
               </a>
             
@@ -712,7 +880,7 @@
           
           
             <div class="post-gallery-row">
-              <a class="post-gallery-img fancybox" href="https://cdn.jsdelivr.net/gh/Sakuralalala/cdn@1.1/img/banner/writing.jpg" rel="gallery_ckhj45qz2000a7otsj4rgsz6w" itemscope itemtype="http://schema.org/ImageObject" itemprop="url">
+              <a class="post-gallery-img fancybox" href="https://cdn.jsdelivr.net/gh/Sakuralalala/cdn@1.1/img/banner/writing.jpg" rel="gallery_ckhr9i75c000fl0tsxcslg7ku" itemscope itemtype="http://schema.org/ImageObject" itemprop="url">
                 <img src="https://cdn.jsdelivr.net/gh/Sakuralalala/cdn@1.1/img/banner/writing.jpg" itemprop="contentUrl">
               </a>
             
@@ -908,7 +1076,7 @@
           
           
             <div class="post-gallery-row">
-              <a class="post-gallery-img fancybox" href="https://cdn.jsdelivr.net/gh/Sakuralalala/cdn@1.1/img/banner/writing.jpg" rel="gallery_ckhj45qz000087otsv96tsmg0" itemscope itemtype="http://schema.org/ImageObject" itemprop="url">
+              <a class="post-gallery-img fancybox" href="https://cdn.jsdelivr.net/gh/Sakuralalala/cdn@1.1/img/banner/writing.jpg" rel="gallery_ckhr9i7540006l0tstcihdumb" itemscope itemtype="http://schema.org/ImageObject" itemprop="url">
                 <img src="https://cdn.jsdelivr.net/gh/Sakuralalala/cdn@1.1/img/banner/writing.jpg" itemprop="contentUrl">
               </a>
             
@@ -1162,7 +1330,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-count">6</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
